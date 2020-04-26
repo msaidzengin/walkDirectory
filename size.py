@@ -17,5 +17,5 @@ sortt = {k: v for k, v in sorted(sizes.items(), key=lambda item: item[1])}
 
 f = open("sizes.txt", "a", encoding='utf-8')
 for x,y in sortt.items():
-    f.write(x + " - " + str(y) + "\n")
+    f.write(str(y) + " - " + x + "\n")
 f.close()

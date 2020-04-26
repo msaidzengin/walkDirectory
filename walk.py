@@ -16,8 +16,10 @@ for r in result:
     names.append(r.split('\\')[-1])
 
 say = Counter(names)
+sortt = {k: v for k, v in sorted(say.items(), key=lambda item: item[1])}
+
 
 f = open("counter.txt", "a", encoding='utf-8')
-for x,y in say.items():
+for x,y in sortt.items():
     f.write(x + " - " + str(y) + "\n")
 f.close()

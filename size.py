@@ -1,21 +1,26 @@
 import os
 from glob import glob
-from collections import Counter
 
 path = os.getcwd()
-result = [y for x in os.walk(path) for y in glob(os.path.join(x[0], '*'))]
+
+result = []
+for entry in os.walk(path):
+    directory = entry[0]
+    for match in glob(os.path.join(directory, "*")):
+        result.append(match)
 
 sizes = {}
-for r in result:
+for file_path in result:
     try:
-        size = os.path.getsize(r)
-        sizes[r] = size
+        sizes[file_path] = os.path.getsize(file_path)
     except:
-        sizes[r] = 0
+        sizes[file_path] = 0
 
-sortt = {k: v for k, v in sorted(sizes.items(), key=lambda item: item[1])}
+sorted_sizes = {
+    file_path: size
+    for file_path, size in sorted(sizes.items(), key=lambda item: item[1])
+}
 
-f = open("sizes.txt", "a", encoding='utf-8')
-for x,y in sortt.items():
-    f.write(str(y) + " - " + x + "\n")
-f.close()
+with open("sizes.txt", "a", encoding="utf-8") as output:
+    for file_path, size in sorted_sizes.items():
+        output.write(str(size) + " - " + file_path + "\n")
